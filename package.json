@@ -1,0 +1,16 @@
+{
+  "name": "instaclone",
+  "version": "1.0.0",
+  "description": "El servidor de la app Instaclone",
+  "main": "index.js",
+  "author": "matiasnnr",
+  "license": "MIT",
+  "scripts": {
+    "dev": "node ./index.js",
+    "start": ""
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "mongoose": "^5.11.15"
+  }
+}
