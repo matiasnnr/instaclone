@@ -31,7 +31,7 @@ function server() {
 
     serverApollo.listen().then(({ url }) => {
         console.log('##################################');
-        console.log(`Servidor listo en la url ${url}`);
+        console.log(`Servidor en ${url}`);
         console.log('##################################');
     });
 }
