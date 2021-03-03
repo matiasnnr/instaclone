@@ -77,25 +77,26 @@ async function login(input) {
 }
 
 async function updateAvatar(file, ctx) {
-    // const { createReadStream, mimetype } = await file;
-    // const extension = mimetype.split('/')[1];
-    // const imgName = `avatar/avt.${extension}`;
-    // const fileData = createReadStream();
+    const { id } = ctx.user;
+    const { createReadStream, mimetype } = await file;
+    const extension = mimetype.split('/')[1];
+    const imgName = `avatar/${id}.${extension}`;
+    const fileData = createReadStream();
 
-    // try {
-    //     const result = await awsUploadImage(fileData, imgName);
-    //     console.log(result);
-    // } catch (error) {
-    //     console.log(error);
-    //     return {
-    //         status: false,
-    //         urlAvatar: null
-    //     }
-    // }
-
-    console.log('hola mundo');
-    console.log(ctx);
-    return null;
+    try {
+        const result = await awsUploadImage(fileData, imgName); // url de la imagen subida al s3 de aws
+        await User.findByIdAndUpdate(id, { avatar: result })
+        return {
+            status: true,
+            urlAvatar: result,
+        }
+    } catch (error) {
+        console.log(error);
+        return {
+            status: false,
+            urlAvatar: null
+        }
+    }
 }
 
 module.exports = {
