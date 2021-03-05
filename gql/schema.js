@@ -56,6 +56,8 @@ const typeDefs = gql`
 
         # el tipo Upload ya lo tiene grapghql, entonces no es necesario agregarlo.
         updateAvatar(file: Upload): UpdateAvatar
+
+        deleteAvatar: Boolean
     }
 `;
 

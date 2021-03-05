@@ -99,9 +99,21 @@ async function updateAvatar(file, ctx) {
     }
 }
 
+async function deleteAvatar(ctx) {
+    const { id } = ctx.user;
+    try {
+        await User.findByIdAndUpdate(id, { avatar: '' });
+        return true;
+    } catch (error) {
+        console.log(error);
+        return false;
+    }
+}
+
 module.exports = {
     register,
     getUser,
     login,
     updateAvatar,
+    deleteAvatar,
 }
