@@ -50,17 +50,22 @@ const typeDefs = gql`
         # aquí van todas las queries (consultas get)
     type Query {
         
+         ### User ###
+
         # query que no recibe nada y devuelve un User
         getUser(id: ID, username: String): User
         
         # va a recibir el nombre del usuario que el cliente este buscando
         search(search: String): [User]
+
+         ### Follow ###
     }
 
         # aquí van todos los mutation (post, put, patch, etc. Todos los que generan cambios en la db)
     type Mutation {
 
-        # User
+        ### User ###
+        
         register(input: UserInput): User
 
         # Login
@@ -72,6 +77,11 @@ const typeDefs = gql`
         deleteAvatar: Boolean
 
         updateUser(input: UserUpdateInput): Boolean
+
+        ### Follow ###
+
+        # para seguir a usuarios
+        follow(username: String!): Boolean
     }
 `;
 

@@ -1,4 +1,5 @@
 const userController = require('../controllers/user');
+const followController = require('../controllers/follow');
 
 const resolvers = {
     Query: {
@@ -7,6 +8,8 @@ const resolvers = {
         // User
         getUser: (_, { id, username }) => userController.getUser(id, username),
         search: (_, { search }) => userController.search(search),
+
+        // Follow
     },
     Mutation: {
         // User
@@ -15,6 +18,11 @@ const resolvers = {
         updateAvatar: (_, { file }, ctx) => userController.updateAvatar(file, ctx),
         deleteAvatar: (_, { }, ctx) => userController.deleteAvatar(ctx),
         updateUser: (_, { input }, ctx) => userController.updateUser(input, ctx),
+
+        // Follow
+
+        // decimos que el usuario que viene en ctx va a seguir al usuario de username
+        follow: (_, { username }, ctx) => followController.follow(username, ctx),
     }
 };
 
