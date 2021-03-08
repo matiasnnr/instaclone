@@ -52,6 +52,9 @@ const typeDefs = gql`
         
         # query que no recibe nada y devuelve un User
         getUser(id: ID, username: String): User
+        
+        # va a recibir el nombre del usuario que el cliente este buscando
+        search(search: String): [User]
     }
 
         # aquí van todos los mutation (post, put, patch, etc. Todos los que generan cambios en la db)
