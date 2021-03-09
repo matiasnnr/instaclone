@@ -59,13 +59,14 @@ const typeDefs = gql`
         search(search: String): [User]
 
          ### Follow ###
+         isFollow(username: String!): Boolean
     }
 
         # aquí van todos los mutation (post, put, patch, etc. Todos los que generan cambios en la db)
     type Mutation {
 
         ### User ###
-        
+
         register(input: UserInput): User
 
         # Login
@@ -82,6 +83,8 @@ const typeDefs = gql`
 
         # para seguir a usuarios
         follow(username: String!): Boolean
+
+        unFollow(username: String!): Boolean
     }
 `;
 

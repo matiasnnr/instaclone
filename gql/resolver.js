@@ -10,6 +10,7 @@ const resolvers = {
         search: (_, { search }) => userController.search(search),
 
         // Follow
+        isFollow: (_, { username }, ctx) => followController.isFollow(username, ctx),
     },
     Mutation: {
         // User
@@ -23,6 +24,7 @@ const resolvers = {
 
         // decimos que el usuario que viene en ctx va a seguir al usuario de username
         follow: (_, { username }, ctx) => followController.follow(username, ctx),
+        unFollow: (_, { username }, ctx) => followController.unFollow(username, ctx),
     }
 };
 
