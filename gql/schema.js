@@ -60,6 +60,8 @@ const typeDefs = gql`
 
          ### Follow ###
          isFollow(username: String!): Boolean
+         getFollowers(username: String!): [User]
+         getFolloweds(username: String!): [User]
     }
 
         # aquí van todos los mutation (post, put, patch, etc. Todos los que generan cambios en la db)
@@ -85,6 +87,7 @@ const typeDefs = gql`
         follow(username: String!): Boolean
 
         unFollow(username: String!): Boolean
+
     }
 `;
 
