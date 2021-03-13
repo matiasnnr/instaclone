@@ -69,7 +69,7 @@ async function login(input) {
 
     if (!passwordSucces) throw new Error('Error en el email o contraseña');
 
-    const userToken = createToken(userFound, process.env.SECRET_KEY, '24h');
+    const userToken = createToken(userFound, process.env.SECRET_KEY, '10d');
 
     return {
         token: userToken

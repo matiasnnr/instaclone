@@ -1,5 +1,7 @@
 const userController = require('../controllers/user');
 const followController = require('../controllers/follow');
+const publicationController = require('../controllers/publication');
+const commentController = require('../controllers/comment');
 
 const resolvers = {
     Query: {
@@ -13,6 +15,12 @@ const resolvers = {
         isFollow: (_, { username }, ctx) => followController.isFollow(username, ctx),
         getFollowers: (_, { username }) => followController.getFollowers(username),
         getFolloweds: (_, { username }) => followController.getFolloweds(username),
+
+        // Publication
+        getPublications: (_, { username }) => publicationController.getPublications(username),
+
+        // Comment
+        getComments: (_, { idPublication }) => commentController.getComments(idPublication),
     },
     Mutation: {
         // User
@@ -27,6 +35,12 @@ const resolvers = {
         // decimos que el usuario que viene en ctx va a seguir al usuario de username
         follow: (_, { username }, ctx) => followController.follow(username, ctx),
         unFollow: (_, { username }, ctx) => followController.unFollow(username, ctx),
+
+        // Publication
+        publish: (_, { file }, ctx) => publicationController.publish(file, ctx),
+
+        // Comment
+        addComment: (_, { input }, ctx) => commentController.addComment(input, ctx),
     }
 };
 

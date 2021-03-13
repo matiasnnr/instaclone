@@ -25,6 +25,26 @@ const typeDefs = gql`
         urlAvatar: String
     }
 
+    type Publish {
+        status: Boolean
+        urlFile: String
+    }
+
+    type Publication {
+        id: ID
+        idUser: ID
+        file: String
+        typeFile: String
+        createdAt: String
+    }
+
+    type Comment {
+        idPublication: ID
+        idUser: User
+        comment: String
+        createdAt: String
+    }
+
         # definimos los datos que queremos para poder registrar a un User
     input UserInput {
         name: String! # ! define que es obligatorio
@@ -47,6 +67,11 @@ const typeDefs = gql`
         description: String
     }
 
+    input CommentInput {
+        idPublication: ID,
+        comment: String
+    }
+
         # aquí van todas las queries (consultas get)
     type Query {
         
@@ -62,6 +87,12 @@ const typeDefs = gql`
          isFollow(username: String!): Boolean
          getFollowers(username: String!): [User]
          getFolloweds(username: String!): [User]
+
+         ### Publication ###
+         getPublications(username: String!): [Publication]
+
+         ### Comment ###
+         getComments(idPublication: ID!): [Comment]
     }
 
         # aquí van todos los mutation (post, put, patch, etc. Todos los que generan cambios en la db)
@@ -88,6 +119,13 @@ const typeDefs = gql`
 
         unFollow(username: String!): Boolean
 
+        ### Publication ###
+
+        # el tipo Upload ya lo tiene grapghql, entonces no es necesario agregarlo.
+        publish(file: Upload): Publish
+
+        ### Comment ###
+        addComment(input: CommentInput): Comment
     }
 `;
 

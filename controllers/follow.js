@@ -66,6 +66,7 @@ async function unFollow(username, ctx) {
     return false;
 }
 
+// obtenemos a quienes nos siguen
 async function getFollowers(username) {
     const userFound = await User.findOne({ username });
 
@@ -84,13 +85,14 @@ async function getFollowers(username) {
     return followersList;
 }
 
+// obtenemos a quienes seguimos
 async function getFolloweds(username) {
     const userFound = await User.findOne({ username });
 
     if (!userFound) throw new Error('Usuario no encontrado');
 
     // con find() buscamos todas las coincidencias 
-    // con populate sacamos todos los datos relacionados al idUser que es un ObjectID (debe ser ObjectID para usar populate)
+    // con populate sacamos todos los datos relacionados al follow que es un ObjectID (debe ser ObjectID para usar populate)
     const followeds = await Follow.find({ idUser: userFound._id }).populate("follow");
 
     const followedsList = [];
