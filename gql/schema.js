@@ -93,6 +93,10 @@ const typeDefs = gql`
 
          ### Comment ###
          getComments(idPublication: ID!): [Comment]
+
+         ### Like ###
+         isLiked(idPublication: ID!): Boolean
+         countLikes(idPublication: ID!): Int
     }
 
         # aquí van todos los mutation (post, put, patch, etc. Todos los que generan cambios en la db)
@@ -126,6 +130,10 @@ const typeDefs = gql`
 
         ### Comment ###
         addComment(input: CommentInput): Comment
+
+        ### Like ###
+        addLike(idPublication: ID!): Boolean
+        deleteLike(idPublication: ID!): Boolean
     }
 `;
 
