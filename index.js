@@ -49,7 +49,8 @@ function server() {
         }
     });
 
-    serverApollo.listen().then(({ url }) => {
+    // si estamos en el servidor de producción tomamos el puerto desde las variables de entorno, sino por defecto será el puerto 4000
+    serverApollo.listen({ port: process.env.PORT || 4000 }).then(({ url }) => {
         console.log('##################################');
         console.log(`Servidor en ${url}`);
         console.log('##################################');
