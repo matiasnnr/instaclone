@@ -45,6 +45,14 @@ const typeDefs = gql`
         createdAt: String
     }
 
+    type FeedPublication {
+        id: ID
+        idUser: User
+        file: String
+        typeFile: String
+        createdAt: String
+    }
+
         # definimos los datos que queremos para poder registrar a un User
     input UserInput {
         name: String! # ! define que es obligatorio
@@ -90,6 +98,7 @@ const typeDefs = gql`
 
          ### Publication ###
          getPublications(username: String!): [Publication]
+         getPublicationsFolloweds: [FeedPublication]
 
          ### Comment ###
          getComments(idPublication: ID!): [Comment]

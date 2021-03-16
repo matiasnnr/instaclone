@@ -1,4 +1,5 @@
 const Publication = require('../models/publication.js');
+const Follow = require('../models/follow.js');
 const User = require('../models/user.js');
 const awsUploadImage = require('../utils/aws-upload-image');
 const { v4: uuidv4 } = require('uuid');
@@ -42,7 +43,31 @@ async function getPublications(username) {
     return publications;
 }
 
+async function getPublicationsFolloweds(ctx) {
+    const followeds = await Follow.find({ idUser: ctx.user.id }).populate("follow");
+
+    const followedsList = [];
+
+    for await (const data of followeds) {
+        followedsList.push(data.follow);
+    }
+
+    const publicationsList = [];
+    for await (const data of followedsList) {
+        const publications = await Publication.find().where({ idUser: data._id }).sort({ createdAt: -1 }).populate("idUser");
+
+        publicationsList.push(...publications); // para pushear solo los objetos y no un array con objetos, se usa el spread operator ... (envíar solo {}, {}, {}... y no [{}, {}, {}...])
+    }
+
+    const result = publicationsList.sort((a, b) => {
+        return new Date(b.createdAt) - new Date(a.createdAt);
+    });
+
+    return result;
+}
+
 module.exports = {
     publish,
     getPublications,
+    getPublicationsFolloweds
 }
