@@ -104,10 +104,31 @@ async function getFolloweds(username) {
     return followedsList;
 }
 
+async function getNotFolloweds(ctx) {
+    const users = await User.find().limit(50);
+
+    const arrayUsers = [];
+
+    for await (const user of users) {
+        const isFind = await Follow.findOne({ idUser: ctx.user.id }).where("follow").equals(user._id); // vemos si estamos siguiendo a un usuario
+
+        // si no lo estamos siguiendo entramos acá y filtramos nuestro propio user
+        // para que no aparezca en la lista de los no seguidos
+        if (!isFind) {
+            if (user._id.toString() !== ctx.user.id.toString()) { // si no es el mismo id, entonces es otro usuario y lo agregamos a la lista
+                arrayUsers.push(user);
+            }
+        }
+    }
+
+    return arrayUsers;
+}
+
 module.exports = {
     follow,
     isFollow,
     unFollow,
     getFollowers,
     getFolloweds,
+    getNotFolloweds,
 }
