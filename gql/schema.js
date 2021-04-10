@@ -38,6 +38,12 @@ const typeDefs = gql`
         createdAt: String
     }
 
+    type Like {
+        id: ID
+        idPublication: ID
+        idUser: ID
+    }
+
     type Comment {
         idPublication: ID
         idUser: User
@@ -144,6 +150,10 @@ const typeDefs = gql`
         ### Like ###
         addLike(idPublication: ID!): Boolean
         deleteLike(idPublication: ID!): Boolean
+    }
+
+    type Subscription {
+        newPublication: Publication!
     }
 `;
 

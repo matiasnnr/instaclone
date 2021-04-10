@@ -6,20 +6,22 @@ const { v4: uuidv4 } = require('uuid');
 
 async function publish(file, ctx) {
     const { id } = ctx.user;
-    const { createReadStream, mimetype } = await file;
-    const extension = mimetype.split('/')[1] // de image/jpeg sacaría jpeg
-    const fileName = `publication/${uuidv4()}.${extension}`;
-    const fileData = createReadStream();
+    // const { createReadStream, mimetype } = await file;
+    // const extension = mimetype.split('/')[1] // de image/jpeg sacaría jpeg
+    // const fileName = `publication/${uuidv4()}.${extension}`;
+    // const fileData = createReadStream();
 
     try {
-        const result = await awsUploadImage(fileData, fileName); // devuelve la url de la imagen
+        // const result = await awsUploadImage(fileData, fileName); // devuelve la url de la imagen
         const publication = new Publication({
             idUser: id,
-            file: result,
-            typeFile: mimetype.split('/')[0], // de image/jpeg sacaría image
+            file: "result",
+            typeFile: "mimetype.split('/')[0]", // de image/jpeg sacaría image
             createdAt: Date.now()
         });
-        publication.save();
+        // publication.save();
+
+        ctx.pubsub.publish('NEW_PUBLICATION', { newPublication: publication });
 
         return {
             status: true,

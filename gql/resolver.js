@@ -19,7 +19,7 @@ const resolvers = {
         getNotFolloweds: (_, { }, ctx) => followController.getNotFolloweds(ctx),
 
         // Publication
-        getPublications: (_, { username }) => publicationController.getPublications(username),
+        getPublications: (_, { username }, ctx) => publicationController.getPublications(username, ctx),
         getPublicationsFolloweds: (_, { }, ctx) => publicationController.getPublicationsFolloweds(ctx),
 
         // Comment
@@ -52,6 +52,14 @@ const resolvers = {
         // Like
         addLike: (_, { idPublication }, ctx) => likeController.addLike(idPublication, ctx),
         deleteLike: (_, { idPublication }, ctx) => likeController.deleteLike(idPublication, ctx),
+    },
+    Subscription: {
+        newPublication: {
+            subscribe: (_, __, { pubsub, user }) => {
+                if (!user) throw new AuthenticationError('Unauthenticated')
+                return pubsub.asyncIterator('NEW_PUBLICATION');
+            }
+        },
     }
 };
 

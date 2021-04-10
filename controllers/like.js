@@ -1,7 +1,14 @@
 const Like = require('../models/like');
 const User = require('../models/user');
+const {
+    UserInputError,
+    AuthenticationError,
+    ForbiddenError,
+    withFilter,
+} = require('apollo-server')
 
 async function addLike(idPublication, ctx) {
+    if (!ctx.user) throw new AuthenticationError('Unauthenticated')
     try {
         const like = new Like({
             idPublication,
@@ -37,6 +44,7 @@ async function isLiked(idPublication, ctx) {
     try {
         const liked = await Like.findOne({ idPublication }).where({ idUser: ctx.user.id });
         if (!liked) throw new Error('No le ha dado like a esta publicación'); // si entra acá, entonces salta al catch y devuelve un false, sino sigue y devuelve un true
+
         return true;
     } catch (error) {
         console.log(error);
